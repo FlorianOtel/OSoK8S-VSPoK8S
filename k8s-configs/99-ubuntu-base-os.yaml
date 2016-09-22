@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    app: ubuntu-base-os
+    role: master
+  name: ubuntu-base-os
+  namespace: default
+spec:
+  selector:
+    app: ubuntu-base-os
+    role: master
+  template:
+    metadata:
+      labels:
+        app: ubuntu-base-os
+        role: master
+    spec:
+      containers:
+      - image: ubuntu-base-os:v0.1
+        imagePullPolicy: Never
+        name: ubuntu-base-os
+

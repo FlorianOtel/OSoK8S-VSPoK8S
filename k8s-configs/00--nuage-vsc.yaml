@@ -1,0 +1,57 @@
+#### Nuage VSC controller service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nuage-vsc
+  labels:
+    app: nuage-vsc
+spec:
+  ports:
+    - port: 6633
+      name: openflow
+    - port: 7406
+      name: json-rpc
+    - port: 179
+      name: bgp
+  selector:
+    app: nuage-vsc
+---
+
+#### Nuage VSC replication controller
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    app: nuage-vsc
+  name: nuage-vsc
+  namespace: default
+spec:
+  selector:
+    app: nuage-vsc
+  template:
+    metadata:
+      labels:
+        app: nuage-vsc
+    spec:
+      containers:
+      - image: vsc:4.0R4
+        imagePullPolicy: Never
+        securityContext:
+          privileged: true
+        name: nuage-vsc
+        ports:
+        - containerPort: 6633
+          protocol: TCP
+        - containerPort: 7406
+          protocol: TCP
+        - containerPort: 179
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /dev/pts
+          name: dev-pts
+      volumes:
+      - name: dev-pts
+        hostPath:
+          path: /dev/pts

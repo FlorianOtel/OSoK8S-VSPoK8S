@@ -1,0 +1,44 @@
+#### keystone service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: keystone
+  labels:
+    app: keystone
+spec:
+  ports:
+    - port: 5000
+      name: keystone-public
+    - port: 35357
+      name: keystone-admin
+  selector:
+    app: keystone
+---
+
+#### keystone replication controller
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    app: keystone
+  name: keystone
+  namespace: default
+spec:
+  selector:
+    app: keystone
+  template:
+    metadata:
+      labels:
+        app: keystone
+    spec:
+      containers:
+      - image: keystone:v0.1
+        imagePullPolicy: Never
+        name: keystone
+        ports:
+        - containerPort: 5000
+          protocol: TCP
+        - containerPort: 35357
+          protocol: TCP

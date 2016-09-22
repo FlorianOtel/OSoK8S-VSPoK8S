@@ -1,0 +1,50 @@
+#### nova service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nova-controller
+  labels:
+    app: nova-controller
+spec:
+  ports:
+    - port: 8774
+      name: nova-api
+    - port: 8773
+      name: nova-ec2
+    - port: 8775
+      name: nova-metadata
+  selector:
+    app: nova-controller
+---
+
+#### nova replication controller
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    app: nova-controller
+  name: nova-controller
+  namespace: default
+spec:
+  selector:
+    app: nova-controller
+  template:
+    metadata:
+      labels:
+        app: nova-controller
+    spec:
+      containers:
+      - image: nova-controller:v0.1
+        imagePullPolicy: Never
+        securityContext:
+          privileged: true
+        name: nova-controller
+        ports:
+        - containerPort: 8774
+          protocol: TCP
+        - containerPort: 8773
+          protocol: TCP
+        - containerPort: 8775
+          protocol: TCP

@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    app: nuage-vrs
+  name: nuage-vrs
+  namespace: default
+spec:
+  selector:
+    app: nuage-vrs
+  template:
+    metadata:
+      labels:
+        app: nuage-vrs
+    spec:
+      containers:
+      - image: vrs:4.0R4
+        imagePullPolicy: Never
+        securityContext:
+          privileged: true
+        name: nuage-vrs
+        ports:
+        - containerPort: 4789
+          protocol: UDP
+        volumeMounts:
+        - mountPath: /var/lock
+          name: var-lock
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: lib-modules
+      volumes:
+      - name: lib-modules
+        hostPath:
+          path: /lib/modules
+      - name: var-lock
+        hostPath:
+          path: /var/lock

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    app: config-loader
+    role: master
+  name: config-loader
+  namespace: default
+spec:
+  selector:
+    app: config-loader
+    role: master
+  template:
+    metadata:
+      labels:
+        app: config-loader
+        role: master
+    spec:
+      containers:
+      - image: REGISTRY/config-loader
+        imagePullPolicy: Always
+        name: config-loader
+      RestartPolicy: Never
