@@ -55,3 +55,5 @@ spec:
               value: mysqlpasswd
             - name: MYSQL_ROOT_PASSWORD
               value: mysqlrootpasswd
+            - name: BIND_ADDRESS
+              value: 0.0.0.0

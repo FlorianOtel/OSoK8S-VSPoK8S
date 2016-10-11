@@ -61,7 +61,20 @@ EOF
 #### (!!!) Create macvtap interface -- we will use this for the 2nd iface of the VSC (control interface). For the first interface we still use standard "tap" to "virbr0" LB.
 ip link add link eth0 name macvtap0 type macvtap mode bridge
 
-# Steal the IP address and assign it to "macvtap0". (!!!) Same IP address will be then re-used inside the VSC as the controll interface (the guest side of "macvtap0" 
+
+#### Steal the MAC address of eth0. WE need to do this since in some cases -- e.g. Nuage VSP -- the MAC address is tied to the port. 
+ETH0_MAC=`cat /sys/class/net/eth0/address`
+MACVTAP0_MAC=`cat /sys/class/net/macvtap0/address`
+
+echo "===> eth0 MAC address is: $ETH0_MAC"
+echo "===> macvtap0 MAC address is: $MACVTAP0_MAC"
+
+ip link set dev eth0 down
+ip link set dev macvtap0 address $ETH0_MAC
+ip link set dev eth0 address $MACVTAP0_MAC
+ip link set dev eth0 up 
+
+####  Steal the IP address and assign it to "macvtap0". (!!!) Same IP address will be then re-used inside the VSC as the controll interface (the guest side of "macvtap0" 
 ifconfig eth0 0.0.0.0
 ifconfig macvtap0 $MY_IP
 # Restore default GW
