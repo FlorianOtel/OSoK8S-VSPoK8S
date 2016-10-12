@@ -32,8 +32,8 @@ spec:
         app: horizon
     spec:
       containers:
-      - image: REGISTRY/horizon
-        imagePullPolicy: Always
+      - image: horizon:v0.1
+        imagePullPolicy: Never
         name: horizon
         ports:
         - containerPort: 80

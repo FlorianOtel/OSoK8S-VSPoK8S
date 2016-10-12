@@ -1,4 +1,4 @@
-FROM    alknopfler/ubuntu-base-os:v0.1
+FROM    ubuntu-base-os
 MAINTAINER BBVA Innovation <eurocloud-oneteam.group@bbva.com>
 
 
@@ -45,11 +45,4 @@ RUN     chown root:root /bootstrap/*.sh && chmod a+x /bootstrap/*.sh
 
 ENTRYPOINT  ["/bootstrap/bootstrap.sh"]
 EXPOSE 80
-
-
-
-
-
-
-
 

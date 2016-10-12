@@ -63,7 +63,7 @@ if ! does_db_exist keystone; then
     export OS_TOKEN=$ADMIN_TOKEN
 
     openstack service create  --name keystone --description "Openstack Identity" identity
-    openstack endpoint create --region $REGION identity public https://$KEYSTONE_OFUSCADO/v3
+    openstack endpoint create --region $REGION identity public http://$KEYSTONE_HOSTNAME/v3
     openstack endpoint create --region $REGION identity internal http://$KEYSTONE_HOSTNAME:5000/v3
     openstack endpoint create --region $REGION identity admin http://$KEYSTONE_HOSTNAME:35357/v3
     openstack domain create --description "Default Domain" default
