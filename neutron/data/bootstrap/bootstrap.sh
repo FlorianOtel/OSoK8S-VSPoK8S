@@ -16,16 +16,18 @@ SQL_SCRIPT=/bootstrap/neutron.sql
 ############################
 # llamada a la funcion del functions.sh
 re_write_file "/controller/neutron/neutron.conf" "/etc/neutron/"
-re_write_file "/controller/neutron/nuage_plugin.ini" "/etc/neutron/plugins/"
+# re_write_file "/controller/neutron/nuage_plugin.ini" "/etc/neutron/plugins/"
+
 sleep 2
-MI_IP=`hostname -i`
-echo "My IP address is: $MI_IP"
+MY_IP=`hostname -i`
+echo "My IP address is: $MY_IP"
 
 
 # Change neutron DB password in the SQL script based on what we have in environment
 fix_configs $SQL_SCRIPT
 
 # Fix configuration files under /etc/neutron
+mv /nuage_plugin.ini /etc/neutron/plugins/nuage/nuage_plugin.ini
 fix_configs /etc/neutron 
 
 ############################
@@ -68,11 +70,11 @@ EOF
     export OS_PASSWORD=$ADMIN_PASSWORD
 
     openstack service create  --name neutron --description "Openstack Networking" network
-    openstack user create --domain default --password $NEUTRON_PASSWORD $NEUTRON_USERNAME
-    openstack role add --project services --user neutron admin
-    openstack endpoint create --region $REGION network public http://$NEUTRON_HOSTNAME:9696
-    openstack endpoint create --region $REGION network internal http://$NEUTRON_HOSTNAME:9696
-    openstack endpoint create --region $REGION network admin http://$NEUTRON_HOSTNAME:9696
+    sleep 3; openstack user create --domain default --password $NEUTRON_PASSWORD $NEUTRON_USERNAME
+    sleep 3; openstack role add --project services --user neutron admin
+    sleep 3; openstack endpoint create --region $REGION network public http://$NEUTRON_HOSTNAME:9696
+    sleep 3; openstack endpoint create --region $REGION network internal http://$NEUTRON_HOSTNAME:9696
+    sleep 3; openstack endpoint create --region $REGION network admin http://$NEUTRON_HOSTNAME:9696
 
     # sync the database
     neutron-db-manage --config-file /etc/neutron/neutron.conf  upgrade head
@@ -97,8 +99,8 @@ EOF
 
 #### Configure Nuage plugin 
 tar -xzvf /Nuage-VSP/4.0R4/nuage-openstack-upgrade-4.0.4-43.tar.gz -C /tmp 
-python /tmp/set_and_audit_cms.py --neutron-config-file /etc/neutron/neutron.conf --plugin-config-file /etc/neutron/plugins/nuage_plugin.ini
+python /tmp/set_and_audit_cms.py --neutron-config-file /etc/neutron/neutron.conf --plugin-config-file /etc/neutron/plugins/nuage/nuage_plugin.ini
 
 
 # Start Neutron server 
-neutron-server --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/nuage_plugin.ini
+neutron-server --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/nuage/nuage_plugin.ini

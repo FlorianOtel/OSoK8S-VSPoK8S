@@ -89,11 +89,11 @@ EOF
     export OS_PROJECT_NAME=admin
 
     openstack service create  --name nova --description "Openstack Compute" compute
-    openstack user create --domain default --password $NOVA_PASSWORD $NOVA_USERNAME
-    openstack role add --project services --user nova admin
-    openstack endpoint create --region $REGION compute public http://$NOVA_HOSTNAME:8774/v2.1/%\(tenant_id\)s
-    openstack endpoint create --region $REGION compute internal http://$NOVA_HOSTNAME:8774/v2.1/%\(tenant_id\)s
-    openstack endpoint create --region $REGION compute admin http://$NOVA_HOSTNAME:8774/v2.1/%\(tenant_id\)s
+    sleep 3; openstack user create --domain default --password $NOVA_PASSWORD $NOVA_USERNAME
+    sleep 3; openstack role add --project services --user nova admin
+    sleep 3; openstack endpoint create --region $REGION compute public http://$NOVA_HOSTNAME:8774/v2.1/%\(tenant_id\)s
+    sleep 3; openstack endpoint create --region $REGION compute internal http://$NOVA_HOSTNAME:8774/v2.1/%\(tenant_id\)s
+    sleep 3; openstack endpoint create --region $REGION compute admin http://$NOVA_HOSTNAME:8774/v2.1/%\(tenant_id\)s
 
 
 fi

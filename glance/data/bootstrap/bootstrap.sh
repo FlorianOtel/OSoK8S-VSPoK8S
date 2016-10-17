@@ -65,11 +65,11 @@ EOF
     export OS_PASSWORD=$ADMIN_PASSWORD
 
     openstack service create  --name glance --description "Openstack Image Service" image
-    openstack endpoint create --region $REGION image public http://$GLANCE_HOSTNAME:9292
-    openstack endpoint create --region $REGION image internal http://$GLANCE_HOSTNAME:9292
-    openstack endpoint create --region $REGION image admin http://$GLANCE_HOSTNAME:9292
-    openstack user create --domain default --password $GLANCE_PASSWORD $GLANCE_USERNAME
-    openstack role add --project services --user glance admin
+    sleep 3; openstack endpoint create --region $REGION image public http://$GLANCE_HOSTNAME:9292
+    sleep 3; openstack endpoint create --region $REGION image internal http://$GLANCE_HOSTNAME:9292
+    sleep 3; openstack endpoint create --region $REGION image admin http://$GLANCE_HOSTNAME:9292
+    sleep 3; openstack user create --domain default --password $GLANCE_PASSWORD $GLANCE_USERNAME
+    sleep 3; openstack role add --project services --user glance admin
 
 fi
 

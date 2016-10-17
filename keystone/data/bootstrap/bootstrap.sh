@@ -63,16 +63,16 @@ if ! does_db_exist keystone; then
     export OS_TOKEN=$ADMIN_TOKEN
 
     openstack service create  --name keystone --description "Openstack Identity" identity
-    openstack endpoint create --region $REGION identity public http://$KEYSTONE_HOSTNAME/v3
-    openstack endpoint create --region $REGION identity internal http://$KEYSTONE_HOSTNAME:5000/v3
-    openstack endpoint create --region $REGION identity admin http://$KEYSTONE_HOSTNAME:35357/v3
-    openstack domain create --description "Default Domain" default
-    openstack project create --domain default  --description "Admin Project" admin
-    openstack project create --domain default  --description "Service Project" services
-    openstack user create --domain default --password $ADMIN_PASSWORD admin
-    openstack role create admin
-    openstack role create user
-    openstack role add --project admin --user admin admin
+    sleep 3; openstack endpoint create --region $REGION identity public http://$KEYSTONE_HOSTNAME/v3
+    sleep 3; openstack endpoint create --region $REGION identity internal http://$KEYSTONE_HOSTNAME:5000/v3
+    sleep 3; openstack endpoint create --region $REGION identity admin http://$KEYSTONE_HOSTNAME:35357/v3
+    sleep 3; openstack domain create --description "Default Domain" default
+    sleep 3; openstack project create --domain default  --description "Admin Project" admin
+    sleep 3; openstack project create --domain default  --description "Service Project" services
+    sleep 3; openstack user create --domain default --password $ADMIN_PASSWORD admin
+    sleep 3; openstack role create admin
+    sleep 3; openstack role create user
+    sleep 3; openstack role add --project admin --user admin admin
 
     ### unset $OS_TOKEN $OS_URL
 fi
