@@ -22,7 +22,6 @@ metadata:
   labels:
     app: neutron
   name: neutron
-  namespace: default
 spec:
   selector:
     app: neutron

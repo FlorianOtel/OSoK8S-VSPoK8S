@@ -24,7 +24,6 @@ metadata:
   labels:
     app: keystone
   name: keystone
-  namespace: default
 spec:
   selector:
     app: keystone

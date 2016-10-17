@@ -22,7 +22,6 @@ metadata:
   labels:
     app: glance
   name: glance
-  namespace: default
 spec:
   selector:
     app: glance

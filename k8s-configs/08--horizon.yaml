@@ -22,7 +22,6 @@ metadata:
   labels:
     app: horizon
   name: horizon
-  namespace: default
 spec:
   selector:
     app: horizon

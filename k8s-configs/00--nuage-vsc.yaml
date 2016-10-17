@@ -26,7 +26,6 @@ metadata:
   labels:
     app: nuage-vsc
   name: nuage-vsc
-  namespace: default
 spec:
   selector:
     app: nuage-vsc

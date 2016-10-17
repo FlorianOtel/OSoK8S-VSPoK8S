@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ETCD_HOSTIP=172.16.254.3
+ETCD_HOSTIP=172.16.254.9
 ETCD="http://$ETCD_HOSTIP:2379/v2/keys"
 
 TOPDIR=/bootstrap
@@ -13,10 +13,11 @@ source <(cat $TOPDIR/00-general/environment.conf | sed -e s~general/~export\ ~g)
 
 #### Load everything into etcd. The variables from "environment.conf" will be expanded to their respective values read above. 
 
+
 # Clean etcd up first
-curl  -X DELETE "$ETCD/controller?recursive=true"
-curl  -X DELETE "$ETCD/general?recursive=true"
-curl  -X DELETE "$ETCD/compute?recursive=true"
+etcdctl --debug -C http://$ETCD_HOSTIP:2379 rm --recursive /general
+etcdctl --debug -C http://$ETCD_HOSTIP:2379 rm --recursive /controller
+etcdctl --debug -C http://$ETCD_HOSTIP:2379 rm --recursive /compute
 
 for dir in $(find $TOPDIR/ -type d)
 do
