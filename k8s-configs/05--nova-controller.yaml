@@ -4,6 +4,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nova-controller
+  namespace: nova-controller
   labels:
     app: nova-controller
 spec:
@@ -26,6 +27,7 @@ metadata:
   labels:
     app: nova-controller
   name: nova-controller
+  namespace: nova-controller
 spec:
   selector:
     app: nova-controller

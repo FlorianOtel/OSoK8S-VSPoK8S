@@ -4,6 +4,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: neutron
+  namespace: neutron
   labels:
     app: neutron
 spec:
@@ -22,6 +23,7 @@ metadata:
   labels:
     app: neutron
   name: neutron
+  namespace: neutron
 spec:
   selector:
     app: neutron

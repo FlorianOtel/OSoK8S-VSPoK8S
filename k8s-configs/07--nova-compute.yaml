@@ -4,6 +4,7 @@ metadata:
   labels:
     app: nova-compute
   name: nova-compute
+  namespace: nova-compute
 spec:
   selector:
     app: nova-compute
