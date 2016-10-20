@@ -53,7 +53,7 @@ export OS_USER_DOMAIN_NAME=default
 export OS_AUTH_URL=$OS_URL
 export OS_IDENTITY_API_VERSION=3
 export OS_IMAGE_API_VERSION=2
-export OS_INTERFACE=admin
+export OS_INTERFACE=internal
 EOF
 
     source ~/openrc
